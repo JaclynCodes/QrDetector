@@ -1,0 +1,63 @@
+{
+  "description": "Example configuration for QR Detection Application",
+  "note": "Copy values to the Settings panel in the application",
+
+  "videoSourceUrl": "http://192.168.1.100:8080/video",
+  "apiUrl": "https://api.example.com/qr-hashes",
+  "apiKey": "your_api_key_here_if_required",
+  "webhookUrl": "https://webhook.example.com/contact-info",
+  "scanInterval": 500,
+  "preventDuplicates": true,
+
+  "examples": {
+    "videoSources": {
+      "androidIPWebcam": "http://192.168.1.50:8080/video",
+      "iOSIPCamera": "http://192.168.1.51:8080/live",
+      "mjpegStream": "http://camera.local/mjpeg",
+      "hlsStream": "http://camera.local/stream.m3u8"
+    },
+    "apiEndpoints": {
+      "production": "https://api.yourcompany.com/v1/qr-hashes",
+      "staging": "https://staging-api.yourcompany.com/v1/qr-hashes",
+      "test": "https://webhook.site/your-unique-id"
+    },
+    "webhookUrls": {
+      "production": "https://webhooks.yourcompany.com/qr-contact",
+      "slack": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL",
+      "discord": "https://discord.com/api/webhooks/YOUR/WEBHOOK",
+      "test": "https://webhook.site/your-unique-id"
+    }
+  },
+
+  "apiRequestFormat": {
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer {apiKey}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "qr_hash": "sha256_hash_string",
+      "timestamp": "ISO 8601 timestamp"
+    }
+  },
+
+  "apiExpectedResponse": {
+    "success": true,
+    "contact_info": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "+1234567890",
+      "company": "Example Corp"
+    }
+  },
+
+  "webhookPayloadFormat": {
+    "qr_hash": "sha256_hash_string",
+    "contact_info": {
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "timestamp": "ISO 8601 timestamp",
+    "event_type": "qr_detected"
+  }
+}

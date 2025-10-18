@@ -1,0 +1,37 @@
+{
+  "name": "qr-detection-app",
+  "version": "1.0.0",
+  "description": "Professional QR Detection Application with Live Video Feed",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:css": "tailwindcss -i ./src/input.css -o ./src/output.css --watch",
+    "dev": "concurrently \"npm run build:css\" \"electron .\"",
+    "package": "electron-builder"
+  },
+  "keywords": ["qr", "detection", "electron", "video"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "tailwindcss": "^3.4.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "crypto": "^1.0.1",
+    "jsqr": "^1.4.0"
+  },
+  "build": {
+    "appId": "com.qrdetection.app",
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "**/*",
+      "!**/*.md"
+    ]
+  }
+}

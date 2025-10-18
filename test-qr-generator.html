@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Test Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        h1 {
+            color: #0ea5e9;
+            text-align: center;
+        }
+        .container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #334155;
+            border: 2px solid #475569;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+        }
+        button {
+            background: #0ea5e9;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #0284c7;
+        }
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+        .info {
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #0ea5e9;
+        }
+        .templates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .template-btn {
+            background: #334155;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid #475569;
+        }
+        .template-btn:hover {
+            border-color: #0ea5e9;
+            background: #475569;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔲 QR Code Test Generator</h1>
+    <div class="container">
+        <div class="info">
+            <strong>📝 Instructions:</strong> Generate QR codes to test your QR Detection Application.
+            Enter any text or URL below, or use one of the quick templates.
+        </div>
+
+        <h3>Quick Templates:</h3>
+        <div class="templates">
+            <div class="template-btn" onclick="useTemplate('contact')">
+                👤 Contact Card
+            </div>
+            <div class="template-btn" onclick="useTemplate('url')">
+                🔗 Website URL
+            </div>
+            <div class="template-btn" onclick="useTemplate('email')">
+                📧 Email
+            </div>
+            <div class="template-btn" onclick="useTemplate('phone')">
+                📞 Phone Number
+            </div>
+            <div class="template-btn" onclick="useTemplate('wifi')">
+                📶 WiFi
+            </div>
+            <div class="template-btn" onclick="useTemplate('json')">
+                📋 JSON Data
+            </div>
+        </div>
+
+        <h3>Custom QR Code Content:</h3>
+        <textarea id="qrText" rows="6" placeholder="Enter text, URL, or data to encode...">https://example.com/contact/12345</textarea>
+
+        <button onclick="generateQR()">Generate QR Code</button>
+
+        <div id="qrcode"></div>
+
+        <div class="info" id="info" style="display: none;">
+            <strong>✅ QR Code Generated!</strong><br>
+            <span id="infoText"></span>
+        </div>
+    </div>
+
+    <script>
+        function useTemplate(type) {
+            const templates = {
+                contact: `BEGIN:VCARD
+VERSION:3.0
+FN:John Doe
+TEL:+1-555-0123
+EMAIL:john.doe@example.com
+URL:https://example.com
+END:VCARD`,
+                url: 'https://github.com/your-username/qr-detection-app',
+                email: 'mailto:contact@example.com?subject=QR Test&body=Hello from QR code!',
+                phone: 'tel:+15550123',
+                wifi: 'WIFI:T:WPA;S:MyNetwork;P:MyPassword123;;',
+                json: JSON.stringify({
+                    id: '12345',
+                    type: 'contact_info',
+                    name: 'Jane Smith',
+                    email: 'jane@example.com',
+                    timestamp: new Date().toISOString()
+                }, null, 2)
+            };
+
+            document.getElementById('qrText').value = templates[type];
+            generateQR();
+        }
+
+        function generateQR() {
+            const text = document.getElementById('qrText').value;
+            const qrcodeDiv = document.getElementById('qrcode');
+
+            // Clear previous QR code
+            qrcodeDiv.innerHTML = '';
+
+            if (!text.trim()) {
+                alert('Please enter some text to generate a QR code');
+                return;
+            }
+
+            // Generate QR code
+            QRCode.toCanvas(text, {
+                width: 400,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            }, function (error, canvas) {
+                if (error) {
+                    console.error(error);
+                    alert('Error generating QR code');
+                    return;
+                }
+                qrcodeDiv.appendChild(canvas);
+
+                // Show info
+                const info = document.getElementById('info');
+                const infoText = document.getElementById('infoText');
+                info.style.display = 'block';
+                infoText.innerHTML = `
+                    <strong>Data:</strong> ${text.substring(0, 100)}${text.length > 100 ? '...' : ''}<br>
+                    <strong>Length:</strong> ${text.length} characters<br>
+                    <strong>Tip:</strong> Display this QR code on your screen and point your camera at it.
+                `;
+            });
+        }
+
+        // Generate initial QR code
+        window.onload = function() {
+            generateQR();
+        };
+    </script>
+</body>
+</html>
