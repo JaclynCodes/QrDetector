@@ -28,7 +28,6 @@ function createWindow() {
   });
 
   // Open DevTools in development
-  // mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
