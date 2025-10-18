@@ -3,7 +3,9 @@
 // Application State
 const appState = {
   isDetecting: false,
+  videoStream: null,
   config: {
+    videoSource: 'webcam', // 'webcam' or 'network'
     videoSourceUrl: '',
     apiUrl: '',
     apiKey: '',
@@ -70,6 +72,12 @@ function setupEventListeners() {
   elements.cancelSettings.addEventListener('click', closeSettings);
   elements.saveSettings.addEventListener('click', saveConfiguration);
 
+  // Video source change handler
+  const videoSourceSelect = document.getElementById('videoSource');
+  if (videoSourceSelect) {
+    videoSourceSelect.addEventListener('change', toggleVideoSourceFields);
+  }
+
   // Close modal on outside click
   elements.settingsModal.addEventListener('click', (e) => {
     if (e.target === elements.settingsModal) {
@@ -88,26 +96,50 @@ async function toggleDetection() {
 }
 
 async function startDetection() {
-  // Check if video source is configured
-  if (!appState.config.videoSourceUrl) {
-    showNotification('error', 'Please configure video source in settings');
-    openSettings();
-    return;
-  }
-
   try {
     logActivity('System', 'Starting video stream...');
-
-    // Load video source
-    elements.video.src = appState.config.videoSourceUrl;
     elements.videoPlaceholder.classList.add('hidden');
 
-    // Wait for video to load
-    await new Promise((resolve, reject) => {
-      elements.video.onloadedmetadata = resolve;
-      elements.video.onerror = () => reject(new Error('Failed to load video stream'));
-      setTimeout(() => reject(new Error('Video load timeout')), 10000);
-    });
+    // Choose video source based on configuration
+    if (appState.config.videoSource === 'webcam') {
+      // Use local webcam
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+            facingMode: 'environment' // Prefer back camera on mobile
+          }
+        });
+
+        appState.videoStream = stream;
+        elements.video.srcObject = stream;
+        logActivity('System', 'Webcam connected successfully');
+
+        // Wait for video to be ready
+        await new Promise((resolve) => {
+          elements.video.onloadedmetadata = resolve;
+        });
+      } catch (error) {
+        throw new Error(`Webcam access failed: ${error.message}`);
+      }
+    } else {
+      // Use network video source
+      if (!appState.config.videoSourceUrl) {
+        showNotification('error', 'Please configure video source URL in settings');
+        openSettings();
+        return;
+      }
+
+      elements.video.src = appState.config.videoSourceUrl;
+
+      // Wait for video to load
+      await new Promise((resolve, reject) => {
+        elements.video.onloadedmetadata = resolve;
+        elements.video.onerror = () => reject(new Error('Failed to load video stream'));
+        setTimeout(() => reject(new Error('Video load timeout')), 10000);
+      });
+    }
 
     // Start QR scanning
     qrScanner.setScanInterval(appState.config.scanInterval);
@@ -135,6 +167,13 @@ async function startDetection() {
 function stopDetection() {
   if (qrScanner) {
     qrScanner.stopScanning();
+  }
+
+  // Stop webcam stream if active
+  if (appState.videoStream) {
+    appState.videoStream.getTracks().forEach(track => track.stop());
+    appState.videoStream = null;
+    elements.video.srcObject = null;
   }
 
   elements.video.src = '';
@@ -211,35 +250,58 @@ async function handleQRDetection(detection) {
 
 // UI Update Functions
 function updateSystemStatus(type, text) {
-  const statusColors = {
-    ready: 'bg-green-500',
-    active: 'bg-blue-500',
-    error: 'bg-red-500'
+  const statusConfigs = {
+    ready: {
+      color: 'bg-emerald-500',
+      shadow: 'shadow-emerald-500/50',
+      text: 'text-slate-200'
+    },
+    active: {
+      color: 'bg-primary-500',
+      shadow: 'shadow-primary-500/50',
+      text: 'text-white'
+    },
+    error: {
+      color: 'bg-red-500',
+      shadow: 'shadow-red-500/50',
+      text: 'text-slate-200'
+    }
   };
 
+  const config = statusConfigs[type];
   elements.systemStatus.innerHTML = `
-    <div class="w-2 h-2 ${statusColors[type]} rounded-full animate-pulse"></div>
-    <span class="text-sm text-slate-300">${text}</span>
+    <div class="w-2.5 h-2.5 ${config.color} rounded-full animate-pulse shadow-lg ${config.shadow}"></div>
+    <span class="text-sm font-medium ${config.text}">${text}</span>
   `;
 }
 
 function updateDetectionStatus(type, text) {
-  const statusColors = {
-    standby: 'bg-slate-700 text-slate-300',
-    scanning: 'bg-blue-600 text-white',
-    detected: 'bg-green-600 text-white'
+  const statusConfigs = {
+    standby: {
+      bg: 'bg-slate-800/50',
+      border: 'border-slate-700/50',
+      dot: 'bg-slate-400',
+      text: 'text-slate-300'
+    },
+    scanning: {
+      bg: 'bg-primary-500/20',
+      border: 'border-primary-500/50',
+      dot: 'bg-primary-400 animate-pulse shadow-lg shadow-primary-400/50',
+      text: 'text-primary-300'
+    },
+    detected: {
+      bg: 'bg-emerald-500/20',
+      border: 'border-emerald-500/50',
+      dot: 'bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/50',
+      text: 'text-emerald-300'
+    }
   };
 
-  const dotColors = {
-    standby: 'bg-slate-400',
-    scanning: 'bg-blue-300 animate-pulse',
-    detected: 'bg-green-300 animate-pulse'
-  };
-
-  elements.detectionStatus.className = `status-badge ${statusColors[type]}`;
+  const config = statusConfigs[type];
+  elements.detectionStatus.className = `flex items-center gap-2.5 px-4 py-2 ${config.bg} rounded-xl border ${config.border} transition-all duration-300`;
   elements.detectionStatus.innerHTML = `
-    <div class="w-2 h-2 ${dotColors[type]} rounded-full"></div>
-    ${text}
+    <div class="w-2 h-2 ${config.dot} rounded-full"></div>
+    <span class="text-sm font-semibold ${config.text}">${text}</span>
   `;
 }
 
@@ -251,17 +313,26 @@ function updateStats() {
 
 function addDetectionToList(detection) {
   const detectionItem = document.createElement('div');
-  detectionItem.className = 'bg-slate-700/50 rounded-lg p-3 border border-slate-600 animate-pulse';
+  detectionItem.className = 'group bg-gradient-to-br from-slate-800/80 to-slate-800/50 backdrop-blur rounded-xl p-4 border border-slate-700/50 hover:border-primary-500/50 transition-all duration-300 animate-pulse shadow-lg';
 
   const time = new Date().toLocaleTimeString();
-  const preview = detection.data.length > 40 ? detection.data.substring(0, 40) + '...' : detection.data;
+  const preview = detection.data.length > 35 ? detection.data.substring(0, 35) + '...' : detection.data;
 
   detectionItem.innerHTML = `
-    <div class="flex items-start justify-between mb-2">
-      <span class="text-xs font-semibold text-primary-400">QR Code Detected</span>
-      <span class="text-xs text-slate-400">${time}</span>
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"></div>
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wide">Detected</span>
+      </div>
+      <span class="text-xs text-slate-500 font-medium">${time}</span>
     </div>
-    <p class="text-sm font-mono text-slate-200 break-all">${escapeHtml(preview)}</p>
+    <p class="text-sm font-mono text-slate-300 break-all leading-relaxed">${escapeHtml(preview)}</p>
+    <div class="mt-3 pt-3 border-t border-slate-700/30 flex items-center gap-2">
+      <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+      </svg>
+      <span class="text-xs text-slate-500">Hash Generated</span>
+    </div>
   `;
 
   // Remove placeholder if exists
@@ -326,12 +397,16 @@ function showNotification(type, message) {
 // Settings Functions
 function openSettings() {
   // Populate form with current config
+  document.getElementById('videoSource').value = appState.config.videoSource;
   document.getElementById('videoSourceUrl').value = appState.config.videoSourceUrl;
   document.getElementById('apiUrl').value = appState.config.apiUrl;
   document.getElementById('apiKey').value = appState.config.apiKey;
   document.getElementById('webhookUrl').value = appState.config.webhookUrl;
   document.getElementById('scanInterval').value = appState.config.scanInterval;
   document.getElementById('preventDuplicates').checked = appState.config.preventDuplicates;
+
+  // Show/hide network URL based on video source
+  toggleVideoSourceFields();
 
   elements.settingsModal.classList.remove('hidden');
   elements.settingsModal.classList.add('flex');
@@ -344,6 +419,7 @@ function closeSettings() {
 
 async function saveConfiguration() {
   // Get form values
+  appState.config.videoSource = document.getElementById('videoSource').value;
   appState.config.videoSourceUrl = document.getElementById('videoSourceUrl').value.trim();
   appState.config.apiUrl = document.getElementById('apiUrl').value.trim();
   appState.config.apiKey = document.getElementById('apiKey').value.trim();
@@ -361,6 +437,17 @@ async function saveConfiguration() {
   showNotification('success', 'Configuration saved');
 
   closeSettings();
+}
+
+function toggleVideoSourceFields() {
+  const videoSource = document.getElementById('videoSource').value;
+  const urlField = document.getElementById('networkUrlField');
+
+  if (videoSource === 'webcam') {
+    urlField.classList.add('hidden');
+  } else {
+    urlField.classList.remove('hidden');
+  }
 }
 
 function loadConfiguration() {

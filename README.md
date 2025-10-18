@@ -1,17 +1,18 @@
 # QR Detection Application
 
-A professional desktop application for detecting QR codes from live network video feeds, generating cryptographic hashes, and triggering webhooks with contact information.
+A professional desktop application for detecting QR codes from live video feeds (webcam or network streams), generating cryptographic hashes, and triggering webhooks with contact information.
 
 ## Features
 
-- **Live Video Feed**: Ingest video streams from local network sources (MJPEG, HLS, WebRTC)
-- **Real-time QR Detection**: Automatic QR code detection with visual highlighting
-- **Hash Generation**: SHA-256 hash generation for detected QR codes
-- **API Integration**: Send QR hashes to configured API endpoints
-- **Webhook Triggers**: Automatically trigger webhooks with contact information
-- **Professional UI**: Modern, dark-themed interface built with TailwindCSS
-- **Activity Monitoring**: Real-time activity logs and detection statistics
-- **Duplicate Prevention**: Smart filtering to prevent duplicate detections
+- **🎥 Webcam Support**: Use your local webcam - no network setup required! (NEW)
+- **📡 Network Streams**: Ingest video streams from IP cameras (MJPEG, HLS, WebRTC)
+- **🔍 Real-time QR Detection**: Automatic QR code detection with visual highlighting
+- **🔐 Hash Generation**: SHA-256 hash generation for detected QR codes
+- **🌐 API Integration**: Send QR hashes to configured API endpoints
+- **🔔 Webhook Triggers**: Automatically trigger webhooks with contact information
+- **🎨 Professional UI**: Modern, dark-themed interface built with TailwindCSS
+- **📊 Activity Monitoring**: Real-time activity logs and detection statistics
+- **🚫 Duplicate Prevention**: Smart filtering to prevent duplicate detections
 
 ## Technology Stack
 
@@ -26,7 +27,7 @@ A professional desktop application for detecting QR codes from live network vide
 - Node.js (v18 or higher)
 - npm or yarn
 - macOS (primary target, but works on Linux/Windows)
-- Network camera or video stream source
+- Webcam (built-in or USB) OR Network camera/video stream source
 
 ## Installation
 
@@ -83,7 +84,16 @@ This will create a `.dmg` file for macOS in the `dist` folder.
 On first launch, click the **Settings** button (gear icon) in the top-right corner to configure:
 
 ### Video Source
-- **Video Source URL**: Enter your network camera stream URL
+
+**Option 1: Local Webcam (Recommended for Testing)**
+- Select **"Local Webcam"** from the dropdown
+- No additional configuration needed
+- Click "Start Detection" and allow camera access
+- Perfect for quick testing with the included QR generator
+
+**Option 2: Network Stream**
+- Select **"Network Stream"** from the dropdown
+- **Network Stream URL**: Enter your IP camera stream URL
   - Example MJPEG: `http://192.168.1.100:8080/video`
   - Example HLS: `http://192.168.1.100:8080/stream.m3u8`
   - Example RTSP (via converter): Use a tool like FFmpeg to convert RTSP to HTTP stream
@@ -114,7 +124,14 @@ On first launch, click the **Settings** button (gear icon) in the top-right corn
 
 ## Usage
 
-1. **Configure Settings**: Set up your video source, API, and webhook URLs
+### Quick Start (Webcam)
+1. **Start the app**: `npm start`
+2. **Click "Start Detection"**: Webcam is selected by default
+3. **Allow camera access**: Grant permission when prompted
+4. **Test with QR code**: Open `test-qr-generator.html` in browser and show to camera
+
+### Full Workflow
+1. **Configure Settings**: Choose webcam or network stream, set API/webhook URLs
 2. **Start Detection**: Click the "Start Detection" button
 3. **Monitor Activity**: Watch the video feed and activity panel for detections
 4. **View Statistics**: Track QR codes detected, API calls, and webhooks triggered

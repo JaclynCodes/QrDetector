@@ -3,35 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Detection System</title>
+    <title>QR Detection Pro</title>
     <link rel="stylesheet" href="./src/output.css">
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
-<body class="h-full bg-slate-900 text-white overflow-hidden">
+<body class="h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white overflow-hidden">
     <div class="flex flex-col h-full">
-        <!-- Header -->
-        <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 shadow-lg">
+        <!-- Modern Header -->
+        <header class="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/50 px-8 py-5 shadow-2xl">
             <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
-                        </svg>
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary-500 to-violet-600 rounded-2xl blur opacity-75"></div>
+                        <div class="relative w-12 h-12 bg-gradient-to-br from-primary-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                            </svg>
+                        </div>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold">QR Detection System</h1>
-                        <p class="text-xs text-slate-400">Live Network Video Analysis</p>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">QR Detection Pro</h1>
+                        <p class="text-xs text-slate-400 font-medium tracking-wide">Real-time QR Code Analysis</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-4">
-                    <div id="systemStatus" class="flex items-center gap-2">
-                        <div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                        <span class="text-sm text-slate-300">Initializing</span>
+                <div class="flex items-center gap-6">
+                    <div id="systemStatus" class="flex items-center gap-3 px-4 py-2 bg-slate-800/50 rounded-full border border-slate-700/50">
+                        <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse shadow-lg shadow-emerald-500/50"></div>
+                        <span class="text-sm font-medium text-slate-200">System Ready</span>
                     </div>
-                    <button id="settingsBtn" class="p-2 hover:bg-slate-700 rounded-lg transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <button id="settingsBtn" class="group p-3 hover:bg-slate-800/50 rounded-xl transition-all duration-300 border border-transparent hover:border-slate-700/50">
+                        <svg class="w-5 h-5 text-slate-400 group-hover:text-white group-hover:rotate-90 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </button>
                 </div>
@@ -41,149 +44,254 @@
         <!-- Main Content -->
         <div class="flex-1 flex gap-6 p-6 overflow-hidden">
             <!-- Video Feed Section -->
-            <div class="flex-1 flex flex-col gap-4">
-                <div class="card p-6 flex-1 flex flex-col">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-semibold">Video Feed</h2>
-                        <div class="flex items-center gap-3">
-                            <span id="detectionStatus" class="status-badge bg-slate-700 text-slate-300">
+            <div class="flex-1 flex flex-col gap-5">
+                <!-- Control Card -->
+                <div class="bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800/50 p-5 shadow-2xl">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div id="detectionStatus" class="flex items-center gap-2.5 px-4 py-2 bg-slate-800/50 rounded-xl border border-slate-700/50">
                                 <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
-                                Standby
-                            </span>
-                            <button id="toggleDetection" class="btn-primary">
-                                <span id="toggleBtnText">Start Detection</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="flex-1 relative bg-slate-900 rounded-lg overflow-hidden border-2 border-slate-700">
-                        <video id="videoElement" class="w-full h-full object-contain" autoplay playsinline></video>
-                        <canvas id="canvasElement" class="absolute top-0 left-0 w-full h-full"></canvas>
-                        <div id="scanOverlay" class="absolute inset-0 pointer-events-none hidden">
-                            <div class="scan-line"></div>
-                        </div>
-                        <div id="videoPlaceholder" class="absolute inset-0 flex items-center justify-center text-slate-500">
-                            <div class="text-center">
-                                <svg class="w-16 h-16 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                </svg>
-                                <p class="font-semibold">No Video Source</p>
-                                <p class="text-sm">Configure video source in settings</p>
+                                <span class="text-sm font-semibold text-slate-300">Standby</span>
+                            </div>
+                            <div class="h-8 w-px bg-slate-700"></div>
+                            <div class="flex items-center gap-5">
+                                <div class="text-center">
+                                    <div id="qrCount" class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">0</div>
+                                    <div class="text-xs text-slate-500 font-medium mt-0.5">QR Codes</div>
+                                </div>
+                                <div class="text-center">
+                                    <div id="apiCount" class="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">0</div>
+                                    <div class="text-xs text-slate-500 font-medium mt-0.5">API Calls</div>
+                                </div>
+                                <div class="text-center">
+                                    <div id="webhookCount" class="text-2xl font-bold bg-gradient-to-r from-violet-400 to-violet-600 bg-clip-text text-transparent">0</div>
+                                    <div class="text-xs text-slate-500 font-medium mt-0.5">Webhooks</div>
+                                </div>
                             </div>
                         </div>
+                        <button id="toggleDetection" class="group relative px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-xl font-semibold text-white shadow-lg shadow-primary-600/30 hover:shadow-xl hover:shadow-primary-600/40 transition-all duration-300 transform hover:scale-105">
+                            <span id="toggleBtnText">Start Detection</span>
+                        </button>
                     </div>
+                </div>
 
-                    <div class="mt-4 grid grid-cols-3 gap-4">
-                        <div class="bg-slate-700/50 rounded-lg p-3">
-                            <p class="text-xs text-slate-400 mb-1">QR Codes Detected</p>
-                            <p id="qrCount" class="text-2xl font-bold text-primary-400">0</p>
+                <!-- Video Display Card -->
+                <div class="flex-1 bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800/50 shadow-2xl overflow-hidden relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-violet-500/5"></div>
+                    <div class="relative h-full flex items-center justify-center bg-slate-950/30">
+                        <video id="videoElement" class="max-w-full max-h-full object-contain rounded-xl" autoplay playsinline></video>
+                        <canvas id="canvasElement" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
+                        <div id="scanOverlay" class="absolute inset-0 pointer-events-none hidden">
+                            <div class="absolute inset-0 border-2 border-primary-500/30 rounded-xl"></div>
+                            <div class="scan-line"></div>
                         </div>
-                        <div class="bg-slate-700/50 rounded-lg p-3">
-                            <p class="text-xs text-slate-400 mb-1">API Calls</p>
-                            <p id="apiCount" class="text-2xl font-bold text-emerald-400">0</p>
-                        </div>
-                        <div class="bg-slate-700/50 rounded-lg p-3">
-                            <p class="text-xs text-slate-400 mb-1">Webhooks Triggered</p>
-                            <p id="webhookCount" class="text-2xl font-bold text-violet-400">0</p>
+                        <div id="videoPlaceholder" class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center space-y-4">
+                                <div class="relative inline-block">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-primary-500 to-violet-500 rounded-full blur-2xl opacity-20"></div>
+                                    <div class="relative w-24 h-24 bg-slate-800/50 rounded-full flex items-center justify-center border border-slate-700/50">
+                                        <svg class="w-12 h-12 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-semibold text-slate-400">No Video Source Active</p>
+                                    <p class="text-sm text-slate-600 mt-1">Click "Start Detection" to begin</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Activity Panel -->
-            <div class="w-96 flex flex-col gap-4">
-                <!-- Recent Detections -->
-                <div class="card p-6 flex-1 flex flex-col">
-                    <h2 class="text-lg font-semibold mb-4">Recent Detections</h2>
-                    <div id="detectionsList" class="flex-1 overflow-y-auto space-y-3">
-                        <div class="text-center text-slate-500 py-8">
-                            <svg class="w-12 h-12 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+            <div class="w-[400px] flex flex-col gap-5">
+                <!-- Recent Detections Card -->
+                <div class="flex-1 bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800/50 shadow-2xl overflow-hidden flex flex-col">
+                    <div class="px-6 py-4 border-b border-slate-800/50 bg-slate-900/30">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
-                            <p class="text-sm">No detections yet</p>
+                            Recent Detections
+                        </h2>
+                    </div>
+                    <div id="detectionsList" class="flex-1 overflow-y-auto p-4 space-y-3">
+                        <div class="text-center py-12">
+                            <div class="w-16 h-16 mx-auto bg-slate-800/30 rounded-full flex items-center justify-center mb-3">
+                                <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-slate-500 font-medium">No detections yet</p>
+                            <p class="text-xs text-slate-600 mt-1">Start scanning to see results</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Activity Log -->
-                <div class="card p-6 h-64">
-                    <h2 class="text-lg font-semibold mb-4">Activity Log</h2>
-                    <div id="activityLog" class="overflow-y-auto h-40 space-y-2 text-sm font-mono">
-                        <div class="text-slate-500">[System] Application started</div>
+                <!-- Activity Log Card -->
+                <div class="h-72 bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800/50 shadow-2xl overflow-hidden flex flex-col">
+                    <div class="px-6 py-4 border-b border-slate-800/50 bg-slate-900/30">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Activity Log
+                        </h2>
+                    </div>
+                    <div id="activityLog" class="flex-1 overflow-y-auto p-4 space-y-2 text-sm font-mono">
+                        <div class="text-slate-500 text-xs">[System] Application initialized</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Settings Modal -->
-    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
-        <div class="card max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b border-slate-700 flex items-center justify-between sticky top-0 bg-slate-800 z-10">
-                <h2 class="text-xl font-bold">Configuration</h2>
-                <button id="closeSettings" class="p-2 hover:bg-slate-700 rounded-lg transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    <!-- Modern Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center z-50 p-6">
+        <div class="bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col">
+            <!-- Modal Header -->
+            <div class="px-8 py-6 border-b border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-800 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Settings</h2>
+                    <p class="text-sm text-slate-400 mt-1">Configure your QR detection system</p>
+                </div>
+                <button id="closeSettings" class="p-2.5 hover:bg-slate-800 rounded-xl transition-colors text-slate-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
-            <div class="p-6 space-y-6">
-                <!-- Video Source -->
-                <div>
-                    <label class="block text-sm font-semibold mb-2">Video Source URL</label>
-                    <input type="text" id="videoSourceUrl" class="input-field" placeholder="http://192.168.1.100:8080/video" />
-                    <p class="text-xs text-slate-400 mt-1">Enter the network stream URL (MJPEG, HLS, or WebRTC)</p>
+
+            <!-- Modal Content -->
+            <div class="flex-1 overflow-y-auto px-8 py-6 space-y-8">
+                <!-- Video Source Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-500/20 to-violet-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-lg">Video Source</h3>
+                            <p class="text-xs text-slate-400">Choose your video input method</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">Source Type</label>
+                            <select id="videoSource" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
+                                <option value="webcam">🎥 Local Webcam</option>
+                                <option value="network">📡 Network Stream</option>
+                            </select>
+                        </div>
+
+                        <div id="networkUrlField" class="hidden">
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">Network Stream URL</label>
+                            <input type="text" id="videoSourceUrl" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" placeholder="http://192.168.1.100:8080/video" />
+                            <p class="text-xs text-slate-500 mt-2">Supports MJPEG, HLS, and WebRTC streams</p>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
 
                 <!-- API Configuration -->
-                <div class="border-t border-slate-700 pt-6">
-                    <h3 class="font-semibold mb-4">API Configuration</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">API Endpoint URL</label>
-                            <input type="text" id="apiUrl" class="input-field" placeholder="https://api.example.com/qr-hashes" />
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-2">API Key (Optional)</label>
-                            <input type="password" id="apiKey" class="input-field" placeholder="Enter API key if required" />
+                            <h3 class="font-bold text-white text-lg">API Configuration</h3>
+                            <p class="text-xs text-slate-400">Configure your API endpoint</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">API Endpoint URL</label>
+                            <input type="text" id="apiUrl" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all" placeholder="https://api.example.com/qr-hashes" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">API Key (Optional)</label>
+                            <input type="password" id="apiKey" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all" placeholder="Enter your API key" />
                         </div>
                     </div>
                 </div>
+
+                <div class="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
 
                 <!-- Webhook Configuration -->
-                <div class="border-t border-slate-700 pt-6">
-                    <h3 class="font-semibold mb-4">Webhook Configuration</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-lg">Webhook Configuration</h3>
+                            <p class="text-xs text-slate-400">Set up webhook notifications</p>
+                        </div>
+                    </div>
+
                     <div>
-                        <label class="block text-sm font-semibold mb-2">Webhook URL</label>
-                        <input type="text" id="webhookUrl" class="input-field" placeholder="https://webhook.example.com/contact-info" />
-                        <p class="text-xs text-slate-400 mt-1">Webhook will receive QR hash and contact information</p>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2">Webhook URL</label>
+                        <input type="text" id="webhookUrl" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all" placeholder="https://webhook.example.com/contact-info" />
+                        <p class="text-xs text-slate-500 mt-2">Receives QR hash and contact information</p>
                     </div>
                 </div>
+
+                <div class="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
 
                 <!-- Detection Settings -->
-                <div class="border-t border-slate-700 pt-6">
-                    <h3 class="font-semibold mb-4">Detection Settings</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-lg">Detection Settings</h3>
+                            <p class="text-xs text-slate-400">Fine-tune detection parameters</p>
+                        </div>
+                    </div>
+
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-semibold mb-2">Scan Interval (ms)</label>
-                            <input type="number" id="scanInterval" class="input-field" value="500" min="100" max="2000" />
-                            <p class="text-xs text-slate-400 mt-1">Time between QR code scans (lower = faster but more CPU)</p>
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">Scan Interval (ms)</label>
+                            <input type="number" id="scanInterval" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" value="500" min="100" max="2000" step="100" />
+                            <p class="text-xs text-slate-500 mt-2">Lower = faster detection, higher CPU usage</p>
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
                             <div>
-                                <label class="block text-sm font-semibold">Prevent Duplicate Detections</label>
-                                <p class="text-xs text-slate-400 mt-1">Ignore same QR code for 5 seconds</p>
+                                <label class="block text-sm font-semibold text-slate-200">Prevent Duplicate Detections</label>
+                                <p class="text-xs text-slate-500 mt-1">Ignore same QR code for 5 seconds</p>
                             </div>
-                            <input type="checkbox" id="preventDuplicates" checked class="w-5 h-5 rounded bg-slate-700 border-slate-600 text-primary-600 focus:ring-primary-500" />
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="preventDuplicates" checked class="sr-only peer">
+                                <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-amber-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-amber-500 peer-checked:to-orange-500"></div>
+                            </label>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Actions -->
-                <div class="border-t border-slate-700 pt-6 flex justify-end gap-3">
-                    <button id="cancelSettings" class="btn-secondary">Cancel</button>
-                    <button id="saveSettings" class="btn-primary">Save Configuration</button>
-                </div>
+            <!-- Modal Footer -->
+            <div class="px-8 py-6 border-t border-slate-800 bg-slate-900/50 flex justify-end gap-3">
+                <button id="cancelSettings" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl transition-all duration-200">
+                    Cancel
+                </button>
+                <button id="saveSettings" class="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-semibold rounded-xl shadow-lg shadow-primary-600/30 hover:shadow-xl hover:shadow-primary-600/40 transition-all duration-200 transform hover:scale-105">
+                    Save Configuration
+                </button>
             </div>
         </div>
     </div>
